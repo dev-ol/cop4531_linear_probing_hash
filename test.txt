@@ -1,0 +1,9 @@
+1
+1
+357913943
+2
+0) Key : 0 value : 12
+1) Key : 0 value : 0
+2) Key : 2 value : 2
+3) Key : 0 value : 32
+Probing amount : 357913943

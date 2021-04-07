@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -13,7 +14,7 @@ struct HashEl
 
 int main()
 {
-    int size = 7;
+    int size = 5;
     int loadFactor = 0.5; // a
     int threshold = size * loadFactor;
 
@@ -21,9 +22,9 @@ int main()
 
     int probing = 0;
 
-    int test[] = {18, 14, 22, 32, 44, 59, 79};
+    int test[] = {2, 12, 22, 32};
 
-    for (int i = 0; i < 7; i++)
+    for (int i = 0; i < 4; i++)
     {
         int x = 1;
         int keyHash = hashFunction(test[i], size);
@@ -32,7 +33,7 @@ int main()
 
         while (table[index].set == true)
         {
-            index = (keyHash + x) % size;
+            index = (keyHash + (x * x)) % size;
             x = x + 1;
 
             probing++;
@@ -55,6 +56,7 @@ int main()
         cout << i << ") "
              << "Key : " << table[i].key << " value : " << table[i].value << endl;
     }
+
     cout << "Probing amount : " << probing << endl;
     return 0;
 }
@@ -62,4 +64,11 @@ int main()
 int hashFunction(int key, int n)
 {
     return key % n;
+}
+
+void Run()
+{
+    ofstream resultFile("results/quadratic_probing.txt");
+
+    resultFile.close();
 }
