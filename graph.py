@@ -5,8 +5,8 @@ import numpy as np
 
 def main():
     # stores the file names of the results in the results folder
-    # resultsFiles = ["quadratic_probing", "linear_probing", "double_hashing"]
-    resultsFiles = ["linear_probing", "double_hashing"]
+    resultsFiles = ["quadratic_probing", "linear_probing", "double_hashing", "my_hash_probing"]
+    
     xs = []
     ys = []
 

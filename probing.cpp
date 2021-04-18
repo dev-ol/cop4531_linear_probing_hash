@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <fstream>
 #include <math.h>
@@ -16,12 +15,12 @@ void clearFiles();
 void GenerateArray(int list[], int amount);
 int hashFunction(int key, int n);
 int hashFunction2(int key, int size, int prime);
-void quadraticProbing(int array[], HashEl table[], int hashSize,
+void quadraticProbing(int array[], int hashSize,
                       int arraySize, double loadFactor);
-void linearProbing(int array[], HashEl table[], int hashSize,
+void linearProbing(int array[], int hashSize,
                    int arraySize, double loadFactor);
 
-void doubleHashing(int array[], HashEl table[], int hashSize,
+void doubleHashing(int array[], int hashSize,
                    int arraySize, double loadFactor);
 
 void myHashProbing(int array[], int hashSize,
@@ -30,10 +29,9 @@ void myHashProbing(int array[], int hashSize,
 int main()
 {
 
-    int max = 10;
+    int max = 1000000;
     double loadfactor = 0.5;
     int hashSize = (max);
-    HashEl *table = new HashEl[hashSize];
     int *array;
     int arraySize = 0;
 
@@ -41,29 +39,19 @@ int main()
 
     while (loadfactor <= 0.99)
     {
-        //cout << "Load factor " << loadfactor << endl;
         arraySize = (int)ceil(max * loadfactor);
-        cout << "\nnumber ele "<< arraySize << endl;
+        
         array = new int[arraySize];
         GenerateArray(array, arraySize);
 
-        // cout << "\nQuadratic Probing" << endl;
-        //quadraticProbing(array, table, hashSize, arraySize, loadfactor);
-        //table = new HashEl[hashSize];
+        quadraticProbing(array, hashSize, arraySize, loadfactor);
+        
 
-        // cout << "***********************" << endl;
-
-        //cout << "\nLinear Probing" << endl;
-       //linearProbing(array, table, hashSize, arraySize, loadfactor);
-        //table = new HashEl[hashSize];
-
-        // cout << "***********************" << endl;
-        // cout << "\nDouble Hashing Probing" << endl;
-     //   doubleHashing(array, table, hashSize, arraySize, loadfactor);
+        linearProbing(array, hashSize, arraySize, loadfactor);
+ 
+        doubleHashing(array, hashSize, arraySize, loadfactor);
         myHashProbing(array,  hashSize, arraySize, loadfactor);
-        //table = new HashEl[hashSize];
-
-        // cout << "***********************" << endl;
+    
 
         loadfactor = loadfactor + 0.1;
 
@@ -73,18 +61,18 @@ int main()
     }
 
     delete[] array;
-    delete[] table;
+    
 
     return 0;
 }
 
-void quadraticProbing(int array[], HashEl table2[], int hashSize, int arraySize, double loadFactor)
+void quadraticProbing(int array[], int hashSize, int arraySize, double loadFactor)
 {
     HashEl *table = new HashEl[hashSize];
    
     ofstream resultFile("results/quadratic_probing.txt", std::ios::app);
 
-    int numProbes = 0;
+    int32_t numProbes = 0;
 
 
     for (int i = 0; i < arraySize; i++)
@@ -96,7 +84,7 @@ void quadraticProbing(int array[], HashEl table2[], int hashSize, int arraySize,
         
         if(table[index].set == false){
 
-           cout << "\n INSERT \n" <<endl;
+         
            table[index].set = true;
              table[index].key = keyHash;
            table[index].value = array[i];
@@ -126,14 +114,14 @@ void quadraticProbing(int array[], HashEl table2[], int hashSize, int arraySize,
     resultFile.close();
 }
 
-void linearProbing(int array[], HashEl table2[], int hashSize,
+void linearProbing(int array[],  int hashSize,
                    int arraySize, double loadFactor)
 {
     HashEl *table = new HashEl[hashSize];
 
     ofstream resultFile("results/linear_probing.txt", std::ios::app);
 
-    int numProbes = 0;
+    int32_t numProbes = 0;
 
    
     for (int i = 0; i < arraySize; i++)
@@ -173,48 +161,42 @@ void linearProbing(int array[], HashEl table2[], int hashSize,
     resultFile.close();
 }
 
-void doubleHashing(int array[], HashEl table2[], int hashSize,
+void doubleHashing(int array[], int hashSize,
                    int arraySize, double loadFactor)
 {
      HashEl *table = new HashEl[hashSize];
     ofstream resultFile("results/double_hashing.txt", std::ios::app);
 
     int32_t numProbes = 0;
-    //int prime = getPrime(hashSize);
   
-
     for (int i = 0; i < arraySize; i++)
     {
         int x = 1;
         int keyHash = hashFunction(array[i], hashSize);
 
         int index = keyHash;
-       // cout << "num to insert " << array[i] << endl;
-       // cout << "num to insert " << array[i] << endl;
-
+       
         if(table[index].set == false){
-
-        //   cout << "\n INSERT \n" <<endl;
+ 
            table[index].set = true;
             table[index].value = array[i];
             table[index].key = keyHash;
-           // cout << "***index " << index << endl;
+         
 
         } else{
-           // int keyhash2 = hashFunction2(array[i], hashSize, 7);
+         
             while (table[index].set == true)
             {
                 int test = (x * (7 - (keyHash % 7)));
-               // cout << "test#### << " << test << endl;
+               
                 index = abs((keyHash + test) % hashSize);
                 x++;
 
                 numProbes++;
             }
              
-          //   cout << "***index " << index << endl;
+        
              table[index].set = true;
-             //cout << "\n INSERT 2 \n" <<endl;
              table[index].key = keyHash;
              table[index].value = array[i];
         }
@@ -222,8 +204,6 @@ void doubleHashing(int array[], HashEl table2[], int hashSize,
         
     }
 
-
-    cout << "Probing amount : " << numProbes << endl;
 
     resultFile << "x = " << loadFactor << " y = "
                << abs(numProbes) << endl;
@@ -236,7 +216,7 @@ void myHashProbing(int array[], int hashSize,
                    int arraySize, double loadFactor){
     HashEl *table = new HashEl[hashSize];
    
-    ofstream resultFile("results/quadratic_probing.txt", std::ios::app);
+    ofstream resultFile("results/my_hash_probing.txt", std::ios::app);
 
     int numProbes = 0;
 
@@ -258,10 +238,11 @@ void myHashProbing(int array[], int hashSize,
 
             while (table[index].set == true)
             {
-                index = ((keyHash + keyHash) % 7) % hashSize;
+                
+                index = (keyHash + (x * x * x) + (keyHash/2)) % hashSize;
                 x = x + 1;
 
-                keyHash= (keyHash + 7) * x;
+               // keyHash= (keyHash + 7) * x;
 
                 numProbes++;
             }
@@ -285,17 +266,6 @@ int hashFunction(int key, int n)
     return abs(key % n);
 }
 
-int hashFunction2(int key, int size, int prime)
-{
-    key %= size;
-
-    if(key < 0){
-        key += size;
-    }
-    int test = prime - key % prime;
-    cout << " testtt " << test << endl;
-    return test;
-}
 
 void GenerateArray(int list[], int amount)
 {
@@ -313,26 +283,5 @@ void clearFiles()
     remove("results/quadratic_probing.txt");
     remove("results/linear_probing.txt");
     remove("results/double_hashing.txt");
-    //remove( "results/quadratic_probing.txt");
+    remove( "results/my_hash_probing.txt");
 }
-
-int getPrime(int hashSize)
-{  
-        for (int i = hashSize - 1; i >= 1; i--) {
-  
-            int count = 0;
-
-            for (int j = 2; j * j <= i; j++)
-  
-                if (i % j == 0)
-  
-                
-                    count++;
-
-            if (count == 0)
-
-                return i;
-        }
-
-        return 3;
-    }
