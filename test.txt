@@ -1,9 +1,135 @@
-1
-1
-357913943
+
+number ele 5
+array
+3
+4
+4
+5
 2
-0) Key : 0 value : 12
-1) Key : 0 value : 0
-2) Key : 2 value : 2
-3) Key : 0 value : 32
-Probing amount : 357913943
+table
+0
+4
+2
+3
+4
+5
+0
+0
+0
+0
+Probing amount : 1
+
+number ele 6
+array
+6
+5
+4
+6
+1
+3
+table
+3
+1
+0
+6
+4
+5
+6
+0
+0
+0
+Probing amount : 11
+
+number ele 7
+array
+6
+6
+1
+6
+7
+5
+2
+table
+0
+1
+2
+6
+5
+6
+6
+7
+0
+0
+Probing amount : 8
+
+number ele 8
+array
+8
+7
+6
+2
+7
+3
+4
+3
+table
+7
+0
+2
+3
+4
+3
+6
+7
+8
+0
+Probing amount : 4
+
+number ele 9
+array
+6
+8
+4
+9
+1
+6
+5
+8
+1
+table
+1
+1
+8
+5
+4
+6
+6
+0
+8
+9
+Probing amount : 11
+
+number ele 10
+array
+8
+9
+4
+10
+7
+9
+6
+1
+2
+1
+table
+10
+9
+1
+2
+4
+1
+6
+7
+8
+9
+Probing amount : 12

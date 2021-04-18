@@ -13,7 +13,7 @@ struct HashEl
 
 int main()
 {
-    int size = 7;
+    int size = 10;
     int loadFactor = 0.5; // a
     int threshold = size * loadFactor;
 
@@ -21,9 +21,9 @@ int main()
 
     int probing = 0;
 
-    int test[] = {18, 14, 22, 32, 44, 59, 79};
+    int test[] = {65, 64, 49, 13, 70};
 
-    for (int i = 0; i < 7; i++)
+    for (int i = 0; i < 5; i++)
     {
         int x = 1;
         int keyHash = hashFunction(test[i], size);
