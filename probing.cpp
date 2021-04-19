@@ -4,13 +4,15 @@
 
 using namespace std;
 
+//sturct use to create a dictionary with key and value pair
 struct HashEl
 {
     int key;
     int value;
-    bool set = false;
+    bool set = false; // use to check if the space is taken
 };
 
+//functions
 void clearFiles();
 void GenerateArray(int list[], int amount);
 int hashFunction(int key, int n);
@@ -28,7 +30,6 @@ void myHashProbing(int array[], int hashSize,
 
 int main()
 {
-
     int max = 1000000;
     double loadfactor = 0.5;
     int hashSize = (max);
@@ -42,14 +43,15 @@ int main()
         arraySize = (int)ceil(max * loadfactor);
         
         array = new int[arraySize];
+
         GenerateArray(array, arraySize);
 
         quadraticProbing(array, hashSize, arraySize, loadfactor);
         
-
         linearProbing(array, hashSize, arraySize, loadfactor);
  
         doubleHashing(array, hashSize, arraySize, loadfactor);
+
         myHashProbing(array,  hashSize, arraySize, loadfactor);
     
 
@@ -61,7 +63,6 @@ int main()
     }
 
     delete[] array;
-    
 
     return 0;
 }
@@ -72,8 +73,9 @@ void quadraticProbing(int array[], int hashSize, int arraySize, double loadFacto
    
     ofstream resultFile("results/quadratic_probing.txt", std::ios::app);
 
+     //using int 32 because of the high value of probes that 
+    //cannot be store with an int. There is an overflow on my system
     int32_t numProbes = 0;
-
 
     for (int i = 0; i < arraySize; i++)
     {
@@ -118,6 +120,8 @@ void linearProbing(int array[],  int hashSize,
 
     ofstream resultFile("results/linear_probing.txt", std::ios::app);
 
+    //using int 32 because of the high value of probes that 
+    //cannot be store with an int. There is an overflow on my system
     int32_t numProbes = 0;
 
    
@@ -147,11 +151,9 @@ void linearProbing(int array[],  int hashSize,
              table[index].key = keyHash;
               table[index].value = array[i];
         }
-
       
     }
 
-  
     resultFile << "x = " << loadFactor << " y = "
                << numProbes << endl;
 
@@ -161,9 +163,11 @@ void linearProbing(int array[],  int hashSize,
 void doubleHashing(int array[], int hashSize,
                    int arraySize, double loadFactor)
 {
-     HashEl *table = new HashEl[hashSize];
+    HashEl *table = new HashEl[hashSize];
     ofstream resultFile("results/double_hashing.txt", std::ios::app);
 
+    //using int 32 because of the high value of probes that 
+    //cannot be store with an int. There is an overflow on my system
     int32_t numProbes = 0;
   
     for (int i = 0; i < arraySize; i++)
@@ -208,14 +212,17 @@ void doubleHashing(int array[], int hashSize,
     resultFile.close();
 }
 
-
+//my custom probing function 
 void myHashProbing(int array[], int hashSize,
                    int arraySize, double loadFactor){
+   
     HashEl *table = new HashEl[hashSize];
    
     ofstream resultFile("results/my_hash_probing.txt", std::ios::app);
-
-    int numProbes = 0;
+     
+     //using int 32 because of the high value of probes that 
+    //cannot be store with an int. There is an overflow on my system
+    int32_t numProbes = 0;
 
 
     for (int i = 0; i < arraySize; i++)
@@ -235,11 +242,9 @@ void myHashProbing(int array[], int hashSize,
 
             while (table[index].set == true)
             {
-                
+                //my custom probing function
                 index = (keyHash + (x * x * x) + (keyHash/2)) % hashSize;
                 x = x + 1;
-
-               // keyHash= (keyHash + 7) * x;
 
                 numProbes++;
             }
@@ -259,11 +264,11 @@ void myHashProbing(int array[], int hashSize,
 
 int hashFunction(int key, int n)
 {
-
     return abs(key % n);
 }
 
 
+//generates random elements for array
 void GenerateArray(int list[], int amount)
 {
 
@@ -275,6 +280,7 @@ void GenerateArray(int list[], int amount)
     }
 }
 
+//clears old files
 void clearFiles()
 {
     remove("results/quadratic_probing.txt");
