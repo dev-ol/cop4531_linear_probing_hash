@@ -8,4 +8,4 @@ To execute, run : ./probing
 
 The results will be printed to a text file under the results folder.
 
-Then to create the graphy, simply run "python3 graphy.py". Note that you will need to install the python package "matplotlib". The graphs will be in the graphs folder.
+Then to create the graphy, simply run "python3 graph.py". Note that you will need to install the python package "matplotlib". The graphs will be in the graphs folder.

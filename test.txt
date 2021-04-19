@@ -1,6 +1,0 @@
-Probing amount : 3167535
-Probing amount : 3916520
-Probing amount : 4675572
-Probing amount : 5222466
-Probing amount : 5934217
-Probing amount : 6616748

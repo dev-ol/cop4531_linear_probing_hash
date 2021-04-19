@@ -105,9 +105,6 @@ void quadraticProbing(int array[], int hashSize, int arraySize, double loadFacto
         }
     }
 
-
-    cout << "Probing amount : " << numProbes << endl;
-
     resultFile << "x = " << loadFactor << " y = "
                << numProbes << endl;
 
